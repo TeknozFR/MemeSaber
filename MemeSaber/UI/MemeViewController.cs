@@ -13,21 +13,22 @@ using TMPro;
 using System.IO;
 using Random = System.Random;
 using System.Diagnostics;
+using IPA.Utilities;
 
 namespace MemeSaber.UI
 {
     class MemeViewController : IInitializable, IDisposable
     {
-        //string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-        DirectoryInfo directoryMemes = new DirectoryInfo(@"C:\Users\tekno\source\repos\MemeSaber\MemeSaber\Memes");
+        string memesFolderPath = Path.Combine(UnityGame.InstallPath, @"UserData\MemeSaber\DefaultMemes");
+
         List<Sprite> memeList = new List<Sprite>();
         List<int> usedMemes = new List<int>();
-        Random random = new Random();
 
+        Random random = new Random();
 
         private ResultsViewController resultsViewController;
 
-        [UIComponent("meme-image")]
+        [UIComponent("meme -image")]
         private ImageView memeImage;
 
         [UIComponent("root")]
@@ -47,10 +48,11 @@ namespace MemeSaber.UI
             rootTransform.Translate(new Vector3(0, 0.80f, 0));
             resultsViewController.didActivateEvent += ResultsViewController_didActivateEvent;
 
-            FileInfo[] Files = directoryMemes.GetFiles();
+            DirectoryInfo memesDirectory = new DirectoryInfo(memesFolderPath);
+            FileInfo[] Files = memesDirectory.GetFiles();
             foreach (FileInfo imagePath in Files)
             {
-                string imageFileName = imagePath.ToString().Replace(@"C:\Users\tekno\source\repos\MemeSaber\MemeSaber\Memes\", "");
+                string imageFileName = imagePath.ToString().Replace(memesFolderPath, "");
                 Plugin.Log.Info("Loaded meme file: " + imageFileName);
                 memeList.Add(BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(("MemeSaber.Memes." + imageFileName)));
             }

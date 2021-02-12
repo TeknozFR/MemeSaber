@@ -11,6 +11,8 @@ using MemeSaber.Installers;
 using SiraUtil.Zenject;
 using UnityEngine;
 using IPALogger = IPA.Logging.Logger;
+using System.IO;
+using IPA.Utilities;
 
 namespace MemeSaber
 {
@@ -36,6 +38,17 @@ namespace MemeSaber
             Instance = this;
             Plugin.Log = logger;
             Plugin.Log?.Debug("Logger initialized.");
+
+            string userDataFolderPath = Path.Combine(UnityGame.InstallPath, @"UserData\MemeSaber");
+            string defaultMemesFolderPath = Path.Combine(userDataFolderPath, "DefaultMemes");
+            string customMemesFolderPath = Path.Combine(userDataFolderPath, "CustomMemes");
+
+            
+            DirectoryInfo userDataFolder = Directory.CreateDirectory(userDataFolderPath);
+            DirectoryInfo defaultMemesFolder = Directory.CreateDirectory(defaultMemesFolderPath);
+            DirectoryInfo customMemesFolder = Directory.CreateDirectory(customMemesFolderPath);
+
+
             zenjector.OnMenu<MemeSaberInstaller>();
         }
 
