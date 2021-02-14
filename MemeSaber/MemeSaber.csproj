@@ -134,27 +134,5 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Memes\20201027_232214.jpg" />
-    <EmbeddedResource Include="Memes\20201202_025948.jpg" />
-    <EmbeddedResource Include="Memes\20210201_135308.jpg" />
-    <EmbeddedResource Include="Memes\20210209_083220.jpg" />
-    <EmbeddedResource Include="Memes\23949cb8-4f66-4132-b67a-6749dc53c285.png" />
-    <EmbeddedResource Include="Memes\BD54FD93-5D96-46E3-A423-9B16F78307A5.JPG" />
-    <EmbeddedResource Include="Memes\e55ee7a.jpg" />
-    <EmbeddedResource Include="Memes\EqNPCEzWMAIqZWz.png" />
-    <EmbeddedResource Include="Memes\FB_IMG_1595891799633.jpg" />
-    <EmbeddedResource Include="Memes\FB_IMG_1596901852515.jpg" />
-    <EmbeddedResource Include="Memes\FB_IMG_1596903054966.jpg" />
-    <EmbeddedResource Include="Memes\FB_IMG_1610683703722.jpg" />
-    <EmbeddedResource Include="Memes\flushed.png" />
-    <EmbeddedResource Include="Memes\image0-48.jpg" />
-    <EmbeddedResource Include="Memes\image0.png" />
-    <EmbeddedResource Include="Memes\IMG_3737.JPG" />
-    <EmbeddedResource Include="Memes\IMG_4473.JPG" />
-    <EmbeddedResource Include="Memes\IMG_4474.JPG" />
-    <EmbeddedResource Include="Memes\IMG_4475.JPG" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

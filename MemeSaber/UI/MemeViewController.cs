@@ -19,16 +19,22 @@ namespace MemeSaber.UI
 {
     class MemeViewController : IInitializable, IDisposable
     {
-        string memesFolderPath = Path.Combine(UnityGame.InstallPath, @"UserData\MemeSaber\DefaultMemes");
+        string memesFolderPath = Path.Combine(UnityGame.InstallPath, @"UserData\MemeSaber\DefaultMemes\");
+        string customMemesFolderPath = Path.Combine(UnityGame.InstallPath, @"UserData\MemeSaber\CustomMemes\");
 
         List<Sprite> memeList = new List<Sprite>();
         List<int> usedMemes = new List<int>();
+
+        string[] extensionsArray = {
+            ".png",
+            ".jpg",
+            ".jpeg" };
 
         Random random = new Random();
 
         private ResultsViewController resultsViewController;
 
-        [UIComponent("meme -image")]
+        [UIComponent("meme-image")]
         private ImageView memeImage;
 
         [UIComponent("root")]
@@ -45,16 +51,75 @@ namespace MemeSaber.UI
         public void Initialize()
         {
             BSMLParser.instance.Parse(BeatSaberMarkupLanguage.Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "MemeSaber.UI.MemeView.bsml"), resultsViewController.gameObject, this);
-            rootTransform.Translate(new Vector3(0, 0.80f, 0));
+            rootTransform.Translate(new Vector3(0, 0.90f, 0));
             resultsViewController.didActivateEvent += ResultsViewController_didActivateEvent;
 
+            Plugin.Log.Info("Memes folder path: " + memesFolderPath);
+            Plugin.Log.Info("Custom Memes folder path " + customMemesFolderPath);
+
             DirectoryInfo memesDirectory = new DirectoryInfo(memesFolderPath);
-            FileInfo[] Files = memesDirectory.GetFiles();
-            foreach (FileInfo imagePath in Files)
+            DirectoryInfo customMemesDirectory = new DirectoryInfo(customMemesFolderPath);
+
+            FileInfo[] memeFiles = memesDirectory.GetFiles();
+            FileInfo[] customMemesFiles = customMemesDirectory.GetFiles();
+
+
+
+            foreach (FileInfo imagePath in memeFiles)
             {
-                string imageFileName = imagePath.ToString().Replace(memesFolderPath, "");
-                Plugin.Log.Info("Loaded meme file: " + imageFileName);
-                memeList.Add(BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(("MemeSaber.Memes." + imageFileName)));
+
+                Plugin.Log.Info("Image path: " + imagePath.ToString());
+
+                if (extensionsArray.Contains(Path.GetExtension(imagePath.ToString()).ToLower()) == true)
+                {
+                    try
+                    {
+                        byte[] byteImageArray = File.ReadAllBytes(imagePath.ToString());
+                        Sprite imageSprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteRaw(byteImageArray);
+
+                        if (imageSprite != null)
+                        {
+                            memeList.Add(imageSprite);
+                        }
+                    }
+
+                    catch (Exception error)
+                    {
+                        Plugin.Log.Info("Error creating sprite image: " + error.ToString());
+                    }
+                }
+            }
+            
+            if (customMemesFiles.Length > 0)
+            {
+                foreach (FileInfo imagePath in customMemesFiles)
+                {
+                    Plugin.Log.Info("Custom image path: " + imagePath.ToString());
+
+                    if (extensionsArray.Contains(Path.GetExtension(imagePath.ToString()).ToLower()) == true)
+                    {
+                        try
+                        {
+                            byte[] byteImageArray = File.ReadAllBytes(imagePath.ToString());
+                            Sprite imageSprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteRaw(byteImageArray);
+
+                            if (imageSprite != null)
+                            {
+                                memeList.Add(imageSprite);
+                            }
+                        }
+
+                        catch (Exception error)
+                        {
+                            Plugin.Log.Info("Error creating sprite image: " + error.ToString());
+                        }
+                    }
+                    else
+                    {
+                        Plugin.Log.Info("Wrong extension for file : " + imagePath.ToString());
+                    }
+                }
+
             }
         }
 
@@ -76,15 +141,14 @@ namespace MemeSaber.UI
         {
             while (true)
             {
+
                 int randomNumber = random.Next(0, memeList.Count());
-
-
 
                 if (usedMemes.Contains(randomNumber) == false)
                 {
+                    
                     memeImage.sprite = memeList[randomNumber];
                     usedMemes.Add(randomNumber);
-
 
                     break;
                 }
