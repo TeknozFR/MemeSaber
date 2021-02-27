@@ -13,6 +13,7 @@ namespace MemeSaber.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<MemeViewController>().AsSingle();
+            Container.BindInterfacesTo<SettingsViewController>().AsSingle();
         }
     }
 }
