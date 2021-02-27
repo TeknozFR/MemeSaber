@@ -1,0 +1,7 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<settings-container>
+		<checkbox-setting id='memesaber-toggle' text='Enable MemeSaber' value='memesaber-enabled' />
+		<checkbox-setting id='meme-default-toggle' text='Enable Default Memes' value='default-enabled' />
+		<checkbox-setting id='meme-custom-toggle' text='Enable Custom Memes' value='custom-enabled' />
+	</settings-container>
+</bg>

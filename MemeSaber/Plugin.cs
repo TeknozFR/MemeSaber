@@ -54,14 +54,14 @@ namespace MemeSaber
 
         #region BSIPA Config
         //Uncomment to use BSIPA's config
-        /*
+        
         [Init]
         public void InitWithConfig(Config conf)
         {
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
             Plugin.Log?.Debug("Config loaded");
         }
-        */
+
         #endregion
 
 
