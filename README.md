@@ -1,3 +1,5 @@
 # MemeSaber
-Beat Saber mod that displays memes at the result screen, after a song ends.
-TODO: Write README
+This Beat Saber plugin allows to display memes (and other images) after a song ends, on the result screen.
+
+## Download
+
